@@ -3,8 +3,7 @@ const helper = require('../../helper')
 
 const fromAddress = 'East 2nd Street, 601';
 const toAddress = '1300 1st St';
-const message = 'Oh boy, here we go again';
-const iceCream = 2;
+
 
 
 describe('Create an order', () => {
