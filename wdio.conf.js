@@ -12,21 +12,30 @@ exports.config = {
    
     maxInstances: 10,
    
-    capabilities: [{
-        browserName: 'chrome'
-    }, {
-        browserName: 'firefox'
-    }],
+    capabilities: [
+        {
+          browserName: 'chrome',
+          'goog:chromeOptions': {
+            args: ['--headless', '--disable-gpu']
+          }
+        },
+        {
+          browserName: 'firefox',
+          'moz:firefoxOptions': {
+            args: ['-headless']
+          }
+        }
+      ],
 
    
     logLevel: 'error',
    
     bail: 0,
 
-  baseUrl: 'https://cnt-6db80b83-2f4e-4f51-9f41-c6149bfab9d5.containerhub.tripleten-services.com',
+  baseUrl: 'https://cnt-e4f2bd3c-6150-49ff-85ff-b87e4d810342.containerhub.tripleten-services.com',
 
 
-    waitforTimeout: 10000,
+    waitforTimeout: 12000,
 
     connectionRetryTimeout: 120000,
 
