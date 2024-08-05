@@ -10,15 +10,9 @@ exports.config = {
         // 'path/to/excluded/files'
     ],
    
-    maxInstances: 10,
+    maxInstances: 5,
    
     capabilities: [
-        {
-          browserName: 'chrome',
-          'goog:chromeOptions': {
-            args: ['--headless', '--disable-gpu']
-          }
-        },
         {
           browserName: 'firefox',
           'moz:firefoxOptions': {
@@ -32,7 +26,7 @@ exports.config = {
    
     bail: 0,
 
-  baseUrl: 'https://cnt-e4f2bd3c-6150-49ff-85ff-b87e4d810342.containerhub.tripleten-services.com',
+  baseUrl: 'https://cnt-6795a3d6-7e1a-4e54-a5fe-1c25e4dd2e97.containerhub.tripleten-services.com',
 
 
     waitforTimeout: 12000,
@@ -41,7 +35,7 @@ exports.config = {
 
     connectionRetryCount: 3,
 
-    services: ['visual', 'firefox-profile', 'intercept'],
+    services: [ 'firefox-profile', 'intercept'],
 
 
     framework: 'mocha',

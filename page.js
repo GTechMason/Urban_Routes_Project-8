@@ -1,46 +1,19 @@
 module.exports = {
-    // Inputs
-    fromField: '#from',
-    toField: '#to',
-    phoneNumberField: '#phone',
-    codeField: '#code',
-    cardNumberField: '#number',
-    cvvCodeField: '//input[@name="code"]',
-    messageToTheDriverField: '#comment',
-
-    // Labels
-    messageToTheDriverLabel: '//label[starts-with(text(), "Message to the driver...")]',
-    iceCreamCountLabel: '//div[starts-with(text(), "Ice cream")]/..//div[@class="r-counter"]//div[@class="counter"]//div[@class="counter-value"]',
-    orderHeaderTime: '.order-header-time',
-    theDriverWillArriveLabel: '//div[starts-with(text(), "The driver will arrive ")]',
-
     // Buttons
     callATaxiButton: 'button=Call a taxi',
     phoneNumberButton: 'div.np-text=Phone number',
     nextButton: 'button=Next',
     confirmButton: 'button=Confirm',
     paymentMethodButton: 'div.pp-text=Payment method',
-        //finds element whether it's active or not
+    
     supportivePlanCard: '//div[@class="tcard"]//div[starts-with(text(), "Supportive")]',
-        //finds element if it's actvie only
+
     supportivePlanCardActive: '//div[@class="tcard active"]//div[starts-with(text(), "Supportive")]',
+    
     submitButton: '//button[starts-with(text(), "Link")]',
     addIceCreamButton: '//div[starts-with(text(), "Ice cream")]/..//div[@class="r-counter"]//div[@class="counter"]//div[@class="counter-plus"]',
     closeAddCardButton: '.payment-picker .section.active .close-button',
     orderButton: '.smart-button-wrapper',
-
-    // Switches 
-    blanketAndHandkerchiefsSwitch: '//div[starts-with(text(), "Blanket and handkerchiefs")]/..//div[@class="r-sw"]',
-    blanketAndHandkerchiefsSwitchInput: '.switch-input',
-
-    // Rows
-    addCardRow: '//div[@class="pp-row disabled"]//div[starts-with(text(), "Add card")]',
-    cardRow: '//div[@class="pp-row"]//div[starts-with(text(), "Card")]',
-
-    // Modals
-    phoneNumberModal: '.modal',
-    orderBody: '.order-body',
-    
 
     // Functions
     fillAddresses: async function(from, to) {
@@ -140,19 +113,46 @@ module.exports = {
     },
     submitPhoneNumber: async function(phoneNumber) {
         await this.fillPhoneNumber(phoneNumber);
-        // we are starting interception of request from the moment of method call
+
         await browser.setupInterceptor();
         await $(this.nextButton).click();
-        // we should wait for response
+
         // eslint-disable-next-line wdio/no-pause
         await browser.pause(2000);
         const codeField = await $(this.codeField);
-        // collect all responses
+  
         const requests = await browser.getRequests();
-        // use first response
-        //await expect(requests.length).toBe(1)
+
         const code = await requests[0].response.body.code
         await codeField.setValue(code)
         await $(this.confirmButton).click()
     },
+    
+    // Inputs
+    fromField: '#from',
+    toField: '#to',
+    phoneNumberField: '#phone',
+    codeField: '#code',
+    cardNumberField: '#number',
+    cvvCodeField: '//input[@name="code"]',
+    messageToTheDriverField: '#comment',
+
+    // Labels
+    messageToTheDriverLabel: '//label[starts-with(text(), "Message to the driver...")]',
+    iceCreamCountLabel: '//div[starts-with(text(), "Ice cream")]/..//div[@class="r-counter"]//div[@class="counter"]//div[@class="counter-value"]',
+    orderHeaderTime: '.order-header-time',
+    theDriverWillArriveLabel: '//div[starts-with(text(), "The driver will arrive ")]',
+
+    // Modals
+    phoneNumberModal: '.modal',
+    orderBody: '.order-body',
+    
+    // Rows
+    addCardRow: '//div[@class="pp-row disabled"]//div[starts-with(text(), "Add card")]',
+    cardRow: '//div[@class="pp-row"]//div[starts-with(text(), "Card")]',    
+
+    // Switches 
+    blanketAndHandkerchiefsSwitch: '//div[starts-with(text(), "Blanket and handkerchiefs")]/..//div[@class="r-sw"]',
+    blanketAndHandkerchiefsSwitchInput: '.switch-input',
+
 };

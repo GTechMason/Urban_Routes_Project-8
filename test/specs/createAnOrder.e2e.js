@@ -11,7 +11,7 @@ const iceCreamCount = 2;
 
 describe('Create an order', () => {
     
-    it('should set addresses correctly', async () => {
+    it('should enter address', async () => {
         await browser.url(`/`);
         await page.fillAddresses(fromAddress, toAddress);
         
@@ -19,7 +19,7 @@ describe('Create an order', () => {
         await expect(await $(page.toField)).toHaveValue(toAddress);
     })
 
-    it('should select supportive plan', async () => {
+    it('should select Supportive ride', async () => {
         await browser.url(`/`);
         await page.fillAddresses(fromAddress, toAddress);
         await page.callATaxi();
@@ -31,7 +31,7 @@ describe('Create an order', () => {
         await expect(await page.isSupportivePlanSelected()).toBe(true);
     })
 
-    it('should fill phone number', async () => {
+    it('should enter phone number', async () => {
         await browser.url(`/`);
         await page.fillAddresses(fromAddress, toAddress);
         await page.callATaxi();
@@ -66,7 +66,7 @@ describe('Create an order', () => {
         await expect(await messageToTheDriverField.getValue()).toBe(message);
     })
 
-    it('should select a blanket and handkerchiefs', async () => {
+    it('should select Blanket and Handkerchiefs', async () => {
         await browser.url(`/`);
         await page.fillAddresses(fromAddress, toAddress);
         await page.callATaxi();
@@ -98,7 +98,7 @@ describe('Create an order', () => {
         await expect(await page.getIceCreamCount()).toBe(iceCreamCount);
     })
 
-    it('car search modal should appear', async () => {
+    it('should make car search modal appear', async () => {
         await browser.url(`/`)
         await page.fillAddresses(fromAddress, toAddress);
         await page.callATaxi();
@@ -129,7 +129,7 @@ describe('Create an order', () => {
         await expect(orderBody).toBeDisplayed();
     })
     
-    it('driver info should appear', async () => {
+    it('should make driver info appear', async () => {
         await browser.url(`/`)
         await page.fillAddresses(fromAddress, toAddress);
         await page.callATaxi();
