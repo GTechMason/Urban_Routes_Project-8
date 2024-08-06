@@ -26,7 +26,7 @@ exports.config = {
    
     bail: 0,
 
-  baseUrl: 'https://cnt-6795a3d6-7e1a-4e54-a5fe-1c25e4dd2e97.containerhub.tripleten-services.com',
+  baseUrl: 'https://cnt-c89acd26-b5dc-4979-9804-dd169aeec790.containerhub.tripleten-services.com',
 
 
     waitforTimeout: 12000,

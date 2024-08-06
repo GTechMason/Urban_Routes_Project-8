@@ -32,7 +32,7 @@ module.exports = {
         await supportivePlanCard.waitForDisplayed();
         await supportivePlanCard.click();
     },
-    isSupportivePlanSelected: async function() {
+    isSupportivePlanActive: async function() {
         const supportivePlanCardActive = await $(this.supportivePlanCardActive);
         return supportivePlanCardActive.isDisplayed();
     },
@@ -46,15 +46,21 @@ module.exports = {
         await phoneNumberField.waitForDisplayed();
         await phoneNumberField.setValue(phoneNumber);
     },
-    fillMessageToTheDriver: async function(message) {
-        const messageToTheDriverLabel = await $(this.messageToTheDriverLabel);
-        await messageToTheDriverLabel.waitForDisplayed();
-        await messageToTheDriverLabel.waitForClickable();
-        await messageToTheDriverLabel.click();
-        
-        const messageToTheDriverField = await $(this.messageToTheDriverField);
-        await messageToTheDriverField.waitForDisplayed();
-        await messageToTheDriverField.setValue(message);
+    submitPhoneNumber: async function(phoneNumber) {
+        await this.fillPhoneNumber(phoneNumber);
+
+        await browser.setupInterceptor();
+        await $(this.nextButton).click();
+
+        // eslint-disable-next-line wdio/no-pause
+        await browser.pause(2000);
+        const codeField = await $(this.codeField);
+  
+        const requests = await browser.getRequests();
+
+        const code = await requests[0].response.body.code
+        await codeField.setValue(code)
+        await $(this.confirmButton).click()
     },
     addCard: async function(cardNumber, cvvCode) {
         const paymentMethodButton = await $(this.paymentMethodButton);
@@ -84,15 +90,24 @@ module.exports = {
         await closeAddCardButton.waitForDisplayed();
         await closeAddCardButton.click();
     },
+    fillMessageToTheDriver: async function(message) {
+        const messageToTheDriverLabel = await $(this.messageToTheDriverLabel);
+        await messageToTheDriverLabel.waitForDisplayed();
+        await messageToTheDriverLabel.waitForClickable();
+        await messageToTheDriverLabel.click();
+        
+        const messageToTheDriverField = await $(this.messageToTheDriverField);
+        await messageToTheDriverField.waitForDisplayed();
+        await messageToTheDriverField.setValue(message);
+    },
     selectBlanketsAndHandkerchief: async function() {
         const blanketAndHandkerchiefsSwitch = await $(this.blanketAndHandkerchiefsSwitch);
         await blanketAndHandkerchiefsSwitch.waitForDisplayed();
         await blanketAndHandkerchiefsSwitch.click();
     },
-    clickOrderButton: async function() {
-        const orderButton = await $(this.orderButton);
-        await orderButton.waitForDisplayed();
-        await orderButton.click();
+    isBlanketAndHandkerchiefsSwitchChecked : async function() {
+        const blanketAndHandkerchiefsSwitchInput = await $(this.blanketAndHandkerchiefsSwitchInput);
+        return await blanketAndHandkerchiefsSwitchInput.isSelected();
     },
     addIceCream : async function(count) {
         const addIceCreamButton = await $(this.addIceCreamButton);
@@ -107,25 +122,10 @@ module.exports = {
         iceCreamCountLabel.waitForDisplayed();
         return Number(await iceCreamCountLabel.getText());
     },
-    isBlanketAndHandkerchiefsSwitchInputChecked : async function() {
-        const blanketAndHandkerchiefsSwitchInput = await $(this.blanketAndHandkerchiefsSwitchInput);
-        return await blanketAndHandkerchiefsSwitchInput.isSelected();
-    },
-    submitPhoneNumber: async function(phoneNumber) {
-        await this.fillPhoneNumber(phoneNumber);
-
-        await browser.setupInterceptor();
-        await $(this.nextButton).click();
-
-        // eslint-disable-next-line wdio/no-pause
-        await browser.pause(2000);
-        const codeField = await $(this.codeField);
-  
-        const requests = await browser.getRequests();
-
-        const code = await requests[0].response.body.code
-        await codeField.setValue(code)
-        await $(this.confirmButton).click()
+    clickOrderButton: async function() {
+        const orderButton = await $(this.orderButton);
+        await orderButton.waitForDisplayed();
+        await orderButton.click();
     },
     
     // Inputs
@@ -140,8 +140,6 @@ module.exports = {
     // Labels
     messageToTheDriverLabel: '//label[starts-with(text(), "Message to the driver...")]',
     iceCreamCountLabel: '//div[starts-with(text(), "Ice cream")]/..//div[@class="r-counter"]//div[@class="counter"]//div[@class="counter-value"]',
-    orderHeaderTime: '.order-header-time',
-    theDriverWillArriveLabel: '//div[starts-with(text(), "The driver will arrive ")]',
 
     // Modals
     phoneNumberModal: '.modal',
